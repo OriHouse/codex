@@ -777,6 +777,11 @@ pub struct Config {
     /// Compact prompt override.
     pub compact_prompt: Option<String>,
 
+    /// orihouse fork: model used only for history compaction.
+    pub compact_model: Option<String>,
+    /// orihouse fork: reasoning effort used only for history compaction.
+    pub compact_reasoning_effort: Option<ReasoningEffort>,
+
     /// Optional external notifier command. When set, Codex will spawn this
     /// program after each completed *turn* (i.e. when the agent finishes
     /// processing a user submission). The value must be the full command
@@ -4532,6 +4537,8 @@ impl Config {
             daybreak_enabled: cfg.daybreak.unwrap_or(false),
             service_tier,
             review_model,
+            compact_model: cfg.compact_model,
+            compact_reasoning_effort: cfg.compact_reasoning_effort,
             model_context_window: cfg.model_context_window,
             model_auto_compact_token_limit: cfg.model_auto_compact_token_limit,
             model_auto_compact_token_limit_scope: cfg

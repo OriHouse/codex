@@ -173,6 +173,11 @@ pub struct ConfigToml {
     /// Review model override used by the `/review` feature.
     pub review_model: Option<String>,
 
+    /// orihouse fork: model used only for automatic and manual history compaction.
+    pub compact_model: Option<String>,
+    /// orihouse fork: reasoning effort used only for history compaction.
+    pub compact_reasoning_effort: Option<ReasoningEffort>,
+
     /// Provider to use from the model_providers map.
     pub model_provider: Option<String>,
 

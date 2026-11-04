@@ -7412,9 +7412,21 @@
       ],
       "description": "Cloud-owned feature settings."
     },
+    "compact_model": {
+      "description": "orihouse fork: model used only for automatic and manual history compaction.",
+      "type": "string"
+    },
     "compact_prompt": {
       "description": "Compact prompt used for history compaction.",
       "type": "string"
+    },
+    "compact_reasoning_effort": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ReasoningEffort"
+        }
+      ],
+      "description": "orihouse fork: reasoning effort used only for history compaction."
     },
     "computer_use": {
       "$ref": "#/definitions/ComputerUseConfigToml"

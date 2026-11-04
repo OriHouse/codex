@@ -126,6 +126,12 @@ pub(crate) async fn run_inline_remote_auto_compact_task(
         CompactionImplementation::ResponsesCompactionV2,
         phase,
     );
+    // orihouse fork: keep upstream's previous-model compaction and background candidates as they are.
+    let skip = candidate.is_some()
+        || step_context.settings.model_info.slug
+            != replacement_step_context.settings.model_info.slug;
+    let step_context =
+        crate::session::orihouse_compact::compaction_step_context(&sess, &step_context, skip).await;
     run_remote_compact_task_inner(
         &sess,
         &step_context,
@@ -150,9 +156,13 @@ pub(crate) async fn run_remote_compact_task(
         CompactionImplementation::ResponsesCompactionV2,
         CompactionPhase::StandaloneTurn,
     );
+    // orihouse fork: the compaction model summarizes; the thread model owns the replacement.
+    let compaction_step_context =
+        crate::session::orihouse_compact::compaction_step_context(&sess, &step_context, false)
+            .await;
     run_remote_compact_task_inner(
         &sess,
-        &step_context,
+        &compaction_step_context,
         &step_context,
         /*client_session*/ None,
         world_state,
